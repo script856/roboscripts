@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roblox Games — Скрипты</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#061329;color:#fff;font-family:Arial,sans-serif}
+header{padding:18px 5%;background:#081a36;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-size:25px;font-weight:800}.nav{color:#8dccff}
+.hero{padding:48px 7%;text-align:center;background:linear-gradient(120deg,#071a38,#07508a)}
+.hero h1{font-size:42px;margin:0 0 12px}.hero p{color:#c5def5;font-size:18px}
+.search{margin:25px auto 0;max-width:850px;display:flex;gap:10px}.search input{flex:1;padding:15px 20px;border-radius:30px;border:1px solid #278cff;background:#071a36;color:#fff;font-size:16px}.search button{padding:0 25px;border:0;border-radius:30px;background:#087cff;color:#fff;font-weight:bold}
+.grid{padding:30px 5%;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.card{background:#0b2347;border:1px solid #1a4679;border-radius:18px;overflow:hidden}.thumb{height:145px;background:linear-gradient(135deg,#147af3,#792cff);display:flex;align-items:center;justify-content:center;text-align:center;padding:15px;font-size:25px;font-weight:800}.info{padding:17px}.info h2{margin:0 0 8px}.info p{color:#9fb9d7}
+.scriptbtn{width:100%;padding:13px;border:0;border-radius:10px;background:#1688ff;color:#fff;font-weight:bold;cursor:pointer}.scriptbtn:hover{background:#39a0ff}
+footer{text-align:center;padding:35px;color:#7193b8}
+.modal{display:none;position:fixed;inset:0;background:#000c;align-items:center;justify-content:center;padding:18px;z-index:10}.box{width:min(850px,100%);background:#0a1d38;border:1px solid #2c8eff;border-radius:18px;padding:22px}.box h2{margin-top:0}.code{background:#020914;border-radius:12px;padding:18px;white-space:pre-wrap;overflow:auto;max-height:430px;color:#bfe5ff;font-family:monospace}.actions{display:flex;gap:10px;margin-top:14px}.actions button{border:0;border-radius:10px;padding:12px 18px;color:#fff;font-weight:bold;cursor:pointer}.copy{background:#087cff}.close{background:#40536d}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">◈ ROBLOX GAMES</div>
+  <div class="nav">🎮 Все игры &nbsp; ⭐ Популярные &nbsp; ❤️ Избранное</div>
+</header>
+
+<section class="hero">
+  <h1>Играй в лучшие игры Roblox!</h1>
+  <p>Выбери игру и нажми «Открыть скрипт».</p>
+  <div class="search">
+    <input id="search" placeholder="Поиск игры...">
+    <button onclick="findGames()">Найти</button>
+  </div>
+</section>
+
+<main class="grid" id="games"></main>
+<footer>Roblox Games — играй, исследуй и создавай!</footer>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h2 id="modalTitle">📜 Скрипт</h2>
+    <pre class="code" id="scriptCode"></pre>
+    <div class="actions">
+      <button class="copy" onclick="copyScript()">📋 Скопировать скрипт</button>
+      <button class="close" onclick="closeModal()">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const games=[
+["Brookhaven 🏠 RP",'-- Скрипт Brookhaven\\nprint("Пример скрипта")'],
+["Blox Fruits",'-- Скрипт Blox Fruits\\nprint("Пример скрипта")'],
+["Rivals",'-- Скрипт Rivals\\nprint("Пример скрипта")'],
+["Steal a Brainrot",'-- Скрипт Steal a Brainrot\\nprint("Пример скрипта")'],
+["Adopt Me!",'-- Скрипт Adopt Me\\nprint("Пример скрипта")'],
+["Doors",'-- Скрипт Doors\\nprint("Пример скрипта")'],
+["Jailbreak",'-- Скрипт Jailbreak\\nprint("Пример скрипта")'],
+["Murder Mystery 2",'-- Скрипт MM2\\nprint("Пример скрипта")']
+];
+
+function render(list=games){
+  document.getElementById("games").innerHTML=list.map((g,i)=>`
+    <article class="card">
+      <div class="thumb">${g[0]}</div>
+      <div class="info">
+        <h2>${g[0]}</h2>
+        <p>⭐ Roblox • Скрипт</p>
+        <button class="scriptbtn" onclick="openScript(${i})">📜 Открыть скрипт</button>
+      </div>
+    </article>`).join("");
+}
+function openScript(i){
+  document.getElementById("modalTitle").textContent="📜 Скрипт — "+games[i][0];
+  document.getElementById("scriptCode").textContent=games[i][1];
+  document.getElementById("modal").style.display="flex";
+}
+function closeModal(){document.getElementById("modal").style.display="none"}
+function copyScript(){
+  navigator.clipboard.writeText(document.getElementById("scriptCode").textContent);
+  alert("Скрипт скопирован!");
+}
+function findGames(){
+  const q=document.getElementById("search").value.toLowerCase();
+  render(games.filter(g=>g[0].toLowerCase().includes(q)));
+}
+render();
+</script>
+</body>
+</html>
